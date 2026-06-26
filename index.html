@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>1970년대 레트로 민트 두벌식 타자기</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -16,6 +16,7 @@
                               radial-gradient(rgba(0, 0, 0, 0.45) 1px, transparent 0);
             background-size: 8px 8px;
             background-position: 0 0, 4px 4px;
+            touch-action: manipulation; /* Prevent double-tap zoom on mobile */
         }
         /* 1970s Streamlined Mint/Sage Green Painted Chassis */
         .typewriter-body {
@@ -86,7 +87,7 @@
 </head>
 <body class="min-h-screen text-stone-200 overflow-x-hidden flex flex-col justify-between select-none">
 
-    <!-- Toast Notification (Replaces Browser Alerts) -->
+    <!-- Toast Notification -->
     <div id="custom-toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-stone-900 border border-emerald-600 text-emerald-400 px-6 py-3 rounded-xl shadow-2xl flex items-center gap-3 z-50 opacity-0 pointer-events-none font-sans text-sm">
         <span class="text-base" id="toast-icon">✨</span>
         <span id="toast-text">알림 메시지</span>
@@ -98,7 +99,7 @@
             <span class="text-3xl">🍵</span>
             <div>
                 <h1 class="text-xl md:text-2xl font-bold text-teal-400 tracking-wider">1970년대 레트로 민트 두벌식 타자기</h1>
-                <p class="text-xs text-stone-400 font-sans">Vintage Mint Steel-Style 2-Set Hangul Typewriter (Classic Edition)</p>
+                <p class="text-xs text-stone-400 font-sans">Vintage Mint Steel-Style 2-Set Hangul Typewriter (Mobile Optimized)</p>
             </div>
         </div>
         <div class="flex space-x-3">
@@ -111,11 +112,11 @@
         </div>
     </header>
 
-    <!-- Main Content -->
-    <main class="flex-grow flex flex-col items-center justify-center p-4 gap-6 max-w-6xl w-full mx-auto">
+    <!-- Main Content Scaler Container -->
+    <main class="flex-grow flex flex-col items-center justify-center p-2 md:p-4 w-full mx-auto overflow-hidden">
         
         <!-- Controls & Jam Meter -->
-        <div class="w-full flex flex-wrap justify-between items-center gap-3 bg-stone-900/70 p-3 rounded-lg border border-stone-800 backdrop-blur">
+        <div class="w-full max-w-4xl flex flex-wrap justify-between items-center gap-3 bg-stone-900/70 p-3 rounded-lg border border-stone-800 backdrop-blur mb-4">
             <div class="flex items-center space-x-4">
                 <div class="flex flex-col">
                     <span class="text-xs text-stone-400 font-sans mb-1">잉크 리본 색상</span>
@@ -127,8 +128,8 @@
 
                 <div class="flex flex-col">
                     <span class="text-xs text-stone-400 font-sans mb-1">인쇄 모드</span>
-                    <div class="px-3 py-1 bg-stone-950 rounded text-teal-400 border border-stone-800 text-xs font-bold h-[30px] flex items-center">
-                        🖨️ 두벌식 겹침인쇄 모드
+                    <div class="px-3 py-1 bg-stone-950 rounded text-teal-400 border border-stone-800 text-xs font-bold h-[30px] flex items-center font-sans">
+                        🖨️ 두벌식 겹침인쇄 (고정)
                     </div>
                 </div>
             </div>
@@ -137,7 +138,7 @@
             <div class="flex items-center space-x-3 bg-stone-950 px-4 py-2 rounded-lg border border-stone-800">
                 <div class="flex flex-col">
                     <span class="text-[10px] text-stone-400 font-sans uppercase tracking-widest">활판 엉킴 한계치</span>
-                    <div class="w-28 bg-stone-800 h-2 rounded overflow-hidden mt-1">
+                    <div class="w-24 md:w-28 bg-stone-800 h-2 rounded overflow-hidden mt-1">
                         <div id="jam-bar" class="bg-teal-500 h-full w-0 transition-all duration-100"></div>
                     </div>
                 </div>
@@ -148,147 +149,151 @@
 
             <!-- Paper Actions -->
             <div class="flex items-center space-x-2">
-                <button id="btn-load-paper" class="px-4 py-2 bg-emerald-700 hover:bg-emerald-600 text-stone-100 rounded font-bold shadow border border-emerald-600 text-sm transition">
+                <button id="btn-load-paper" class="px-3 md:px-4 py-2 bg-emerald-700 hover:bg-emerald-600 text-stone-100 rounded font-bold shadow border border-emerald-600 text-xs md:text-sm transition">
                     📄 새 종이 넣기
                 </button>
-                <button id="btn-rip-paper" class="px-4 py-2 bg-red-950 hover:bg-red-900 text-red-200 rounded font-bold shadow border border-red-900 text-sm transition">
-                    ✂️ 종이 뜯어내기
+                <button id="btn-rip-paper" class="px-3 md:px-4 py-2 bg-red-950 hover:bg-red-900 text-red-200 rounded font-bold shadow border border-red-900 text-xs md:text-sm transition">
+                    ✂️ 종이 뜯기
                 </button>
             </div>
         </div>
 
-        <!-- TYPEWRITER CHASSIS -->
-        <div class="w-full max-w-4xl typewriter-body rounded-2xl p-6 flex flex-col items-center gap-6 relative overflow-hidden">
-            
-            <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent pointer-events-none"></div>
-
-            <!-- 1. CARRIAGE ASSEMBLY (Sleek 1970s streamlined styling) -->
-            <div class="w-full bg-stone-900 rounded-xl p-3 border-b-4 border-stone-950 relative shadow-2xl flex flex-col items-center overflow-hidden h-[420px]">
+        <!-- SCALED WRAPPER FOR MOBILE COMPATIBILITY -->
+        <div id="typewriter-scale-wrapper" class="w-full flex justify-center items-start origin-top transition-all duration-300">
+            <!-- TYPEWRITER CHASSIS -->
+            <div id="typewriter-chassis" class="w-[896px] typewriter-body rounded-2xl p-6 flex flex-col items-center gap-6 relative overflow-hidden shrink-0">
                 
-                <!-- Shiny Metal Carriage Rails -->
-                <div class="absolute left-0 right-0 top-1/2 h-4 bg-gradient-to-b from-stone-400 via-stone-200 to-stone-500 border-y border-stone-600 z-0"></div>
+                <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent pointer-events-none"></div>
 
-                <!-- CARRIAGE CONTAINER -->
-                <div id="carriage" class="absolute h-full w-[800px] z-10 carriage-transition flex flex-col justify-center items-center" style="transform: translateX(0px);">
+                <!-- 1. CARRIAGE ASSEMBLY -->
+                <div class="w-full bg-stone-900 rounded-xl p-3 border-b-4 border-stone-950 relative shadow-2xl flex flex-col items-center overflow-hidden h-[420px]">
                     
-                    <!-- Carriage Return Lever (Retro polished look) -->
-                    <div id="return-lever" class="absolute left-10 top-1/3 w-4 h-24 bg-gradient-to-r from-stone-300 via-stone-100 to-stone-400 rounded-lg cursor-pointer transform origin-bottom border border-stone-500 shadow-md hover:brightness-110 active:rotate-12 transition-transform duration-100 z-30" title="줄 바꿈 레버 (Enter)">
-                        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-4 bg-stone-200 rounded-full border border-stone-400"></div>
-                        <span class="absolute -top-6 -left-3 text-[10px] text-stone-400 font-sans rotate-12 font-bold">줄 바꿈</span>
-                    </div>
+                    <!-- Shiny Metal Carriage Rails -->
+                    <div class="absolute left-0 right-0 top-1/2 h-4 bg-gradient-to-b from-stone-400 via-stone-200 to-stone-500 border-y border-stone-600 z-0"></div>
 
-                    <!-- Left Platen Knob (Chic 70s Cream Beige Accent) -->
-                    <div id="knob-left" class="absolute -left-6 top-1/2 -translate-y-1/2 w-8 h-12 bg-gradient-to-r from-stone-200 to-stone-300 rounded border-y border-stone-400 cursor-ns-resize shadow-lg flex flex-col justify-between p-1 z-30" title="종이 스크롤">
-                        <div class="h-0.5 bg-stone-400 w-full"></div>
-                        <div class="h-0.5 bg-stone-400 w-full"></div>
-                        <div class="h-0.5 bg-stone-400 w-full"></div>
-                    </div>
-
-                    <!-- Right Platen Knob (Chic 70s Cream Beige Accent) -->
-                    <div id="knob-right" class="absolute -right-6 top-1/2 -translate-y-1/2 w-8 h-12 bg-gradient-to-l from-stone-200 to-stone-300 rounded border-y border-stone-400 cursor-ns-resize shadow-lg flex flex-col justify-between p-1 z-30" title="종이 스크롤">
-                        <div class="h-0.5 bg-stone-400 w-full"></div>
-                        <div class="h-0.5 bg-stone-400 w-full"></div>
-                        <div class="h-0.5 bg-stone-400 w-full"></div>
-                    </div>
-
-                    <!-- THE PLATEN ROLLER -->
-                    <div class="w-[520px] h-[340px] bg-stone-950 rounded-lg border-2 border-stone-800 relative shadow-inner overflow-hidden flex justify-center items-center">
-                        <div class="absolute inset-x-0 top-1/2 -translate-y-1/2 h-20 bg-stone-900/60 border-y border-stone-800 pointer-events-none z-0"></div>
-
-                        <!-- PAPER CONTAINER -->
-                        <div id="paper-container" class="absolute w-[440px] h-[600px] bg-[#fdfaf2] shadow-2xl transition-all duration-300 transform rounded border border-stone-300/50 z-10 flex flex-col overflow-hidden" style="transform: translateY(120px); opacity: 0;">
-                            <!-- Premium Linen Paper Grain -->
-                            <div class="absolute inset-0 bg-[radial-gradient(#ebd9c0_1px,transparent_0)] bg-[length:5px_5px] opacity-20 pointer-events-none"></div>
-                            
-                            <!-- Virtual Sheet Content Canvas -->
-                            <canvas id="paper-canvas" class="w-full h-full block z-10 cursor-text"></canvas>
-                            <div class="absolute inset-x-0 top-0 h-4 bg-gradient-to-b from-black/10 to-transparent pointer-events-none"></div>
-                        </div>
-
-                        <!-- Paper Feed Guide Bars -->
-                        <div class="absolute left-6 right-6 top-[135px] h-1 bg-gradient-to-b from-stone-300 to-stone-500 border border-stone-400 rounded-full z-20 opacity-90 shadow"></div>
-                        <div class="absolute left-10 right-10 top-[180px] h-2 bg-stone-800/80 border-t border-stone-900 rounded-full z-20 pointer-events-none"></div>
-                    </div>
-
-                    <!-- Carriage Scale -->
-                    <div class="w-[520px] h-5 bg-gradient-to-b from-stone-800 to-stone-950 border border-stone-900 rounded-b flex justify-between px-6 text-[8px] text-stone-500 font-mono tracking-widest z-20">
-                        <span>|...0...|...10...|...20...|...30...|...40...|...50...|...60...|</span>
-                    </div>
-                </div>
-
-                <!-- FRONT STATIC ELEMENTS -->
-                <div class="absolute bottom-4 left-1/2 -translate-x-1/2 w-48 h-28 z-30 pointer-events-none flex flex-col justify-between items-center">
-                    <div id="no-paper-alert" class="px-3 py-1 bg-red-600 text-stone-100 text-xs font-sans font-bold rounded-lg shadow-lg animate-bounce transition-opacity">
-                        종이가 장착되지 않았습니다
-                    </div>
-
-                    <div id="jam-alert" class="px-3 py-1 bg-amber-600 text-stone-100 text-xs font-sans font-bold rounded-lg shadow-lg hidden animate-pulse">
-                        ⚠️ 활판 엉킴! 정돈이 필요합니다
-                    </div>
-
-                    <!-- Metal ribbon guide -->
-                    <div class="relative w-20 h-16 flex justify-center">
-                        <div class="absolute left-0 bottom-0 w-2 h-12 bg-gradient-to-t from-stone-700 to-stone-500 rounded"></div>
-                        <div class="absolute right-0 bottom-0 w-2 h-12 bg-gradient-to-t from-stone-700 to-stone-500 rounded"></div>
-                        <div id="ribbon-strip" class="absolute bottom-3 left-1 right-1 h-3 bg-stone-950 border-y border-stone-900 transition-all duration-300"></div>
+                    <!-- CARRIAGE CONTAINER -->
+                    <div id="carriage" class="absolute h-full w-[800px] z-10 carriage-transition flex flex-col justify-center items-center" style="transform: translateX(0px);">
                         
-                        <!-- Physical Typebar Strike Lever -->
-                        <div id="typebar" class="absolute bottom-0 left-1/2 -translate-x-1/2 w-1.5 h-16 bg-gradient-to-t from-stone-600 to-stone-300 origin-bottom transform scale-y-0 opacity-0 z-40"></div>
-                    </div>
-                </div>
-            </div>
+                        <!-- Carriage Return Lever -->
+                        <div id="return-lever" class="absolute left-10 top-1/3 w-4 h-24 bg-gradient-to-r from-stone-300 via-stone-100 to-stone-400 rounded-lg cursor-pointer transform origin-bottom border border-stone-500 shadow-md hover:brightness-110 active:rotate-12 transition-transform duration-100 z-30" title="줄 바꿈 레버 (Enter)">
+                            <div class="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-4 bg-stone-200 rounded-full border border-stone-400"></div>
+                            <span class="absolute -top-6 -left-3 text-[10px] text-stone-400 font-sans rotate-12 font-bold">줄 바꿈</span>
+                        </div>
 
-            <!-- 2. INTERNAL CHASSIS & MECHANICS -->
-            <div class="w-full flex justify-between items-center px-12 bg-stone-950/60 py-2 rounded-xl border border-stone-900/80">
-                <div class="flex items-center space-x-2">
-                    <span class="text-xs text-stone-500 font-sans">리본 축 L</span>
-                    <div class="relative w-12 h-12 bg-stone-900 rounded-full border border-stone-800 shadow-inner flex items-center justify-center">
-                        <div id="spool-l" class="w-10 h-10 rounded-full bg-gradient-to-br from-stone-800 to-black border-2 border-stone-700 flex items-center justify-center transition-transform duration-100">
-                            <div class="w-4 h-4 rounded-full bg-stone-900 border border-stone-600"></div>
+                        <!-- Left Platen Knob -->
+                        <div id="knob-left" class="absolute -left-6 top-1/2 -translate-y-1/2 w-8 h-12 bg-gradient-to-r from-stone-200 to-stone-300 rounded border-y border-stone-400 cursor-ns-resize shadow-lg flex flex-col justify-between p-1 z-30" title="종이 스크롤">
+                            <div class="h-0.5 bg-stone-400 w-full"></div>
+                            <div class="h-0.5 bg-stone-400 w-full"></div>
+                            <div class="h-0.5 bg-stone-400 w-full"></div>
+                        </div>
+
+                        <!-- Right Platen Knob -->
+                        <div id="knob-right" class="absolute -right-6 top-1/2 -translate-y-1/2 w-8 h-12 bg-gradient-to-l from-stone-200 to-stone-300 rounded border-y border-stone-400 cursor-ns-resize shadow-lg flex flex-col justify-between p-1 z-30" title="종이 스크롤">
+                            <div class="h-0.5 bg-stone-400 w-full"></div>
+                            <div class="h-0.5 bg-stone-400 w-full"></div>
+                            <div class="h-0.5 bg-stone-400 w-full"></div>
+                        </div>
+
+                        <!-- THE PLATEN ROLLER -->
+                        <div class="w-[520px] h-[340px] bg-stone-950 rounded-lg border-2 border-stone-800 relative shadow-inner overflow-hidden flex justify-center items-center">
+                            <div class="absolute inset-x-0 top-1/2 -translate-y-1/2 h-20 bg-stone-900/60 border-y border-stone-800 pointer-events-none z-0"></div>
+
+                            <!-- PAPER CONTAINER -->
+                            <div id="paper-container" class="absolute w-[440px] h-[600px] bg-[#fdfaf2] shadow-2xl transition-all duration-300 transform rounded border border-stone-300/50 z-10 flex flex-col overflow-hidden" style="transform: translateY(120px); opacity: 0;">
+                                <div class="absolute inset-0 bg-[radial-gradient(#ebd9c0_1px,transparent_0)] bg-[length:5px_5px] opacity-20 pointer-events-none"></div>
+                                
+                                <canvas id="paper-canvas" class="w-full h-full block z-10 cursor-text"></canvas>
+                                <div class="absolute inset-x-0 top-0 h-4 bg-gradient-to-b from-black/10 to-transparent pointer-events-none"></div>
+                            </div>
+
+                            <!-- Paper Feed Guide Bars -->
+                            <div class="absolute left-6 right-6 top-[135px] h-1 bg-gradient-to-b from-stone-300 to-stone-500 border border-stone-400 rounded-full z-20 opacity-90 shadow"></div>
+                            <div class="absolute left-10 right-10 top-[180px] h-2 bg-stone-800/80 border-t border-stone-900 rounded-full z-20 pointer-events-none"></div>
+                        </div>
+
+                        <!-- Carriage Scale -->
+                        <div class="w-[520px] h-5 bg-gradient-to-b from-stone-800 to-stone-950 border border-stone-900 rounded-b flex justify-between px-6 text-[8px] text-stone-500 font-mono tracking-widest z-20">
+                            <span>|...0...|...10...|...20...|...30...|...40...|...50...|...60...|</span>
+                        </div>
+                    </div>
+
+                    <!-- FRONT STATIC ELEMENTS -->
+                    <div class="absolute bottom-4 left-1/2 -translate-x-1/2 w-48 h-28 z-30 pointer-events-none flex flex-col justify-between items-center">
+                        <div id="no-paper-alert" class="px-3 py-1 bg-red-600 text-stone-100 text-xs font-sans font-bold rounded-lg shadow-lg animate-bounce transition-opacity">
+                            종이가 장착되지 않았습니다
+                        </div>
+
+                        <div id="jam-alert" class="px-3 py-1 bg-amber-600 text-stone-100 text-xs font-sans font-bold rounded-lg shadow-lg hidden animate-pulse">
+                            ⚠️ 활판 엉킴! 정돈이 필요합니다
+                        </div>
+
+                        <!-- Metal ribbon guide -->
+                        <div class="relative w-20 h-16 flex justify-center">
+                            <div class="absolute left-0 bottom-0 w-2 h-12 bg-gradient-to-t from-stone-700 to-stone-500 rounded"></div>
+                            <div class="absolute right-0 bottom-0 w-2 h-12 bg-gradient-to-t from-stone-700 to-stone-500 rounded"></div>
+                            <div id="ribbon-strip" class="absolute bottom-3 left-1 right-1 h-3 bg-stone-950 border-y border-stone-900 transition-all duration-300"></div>
+                            
+                            <!-- Physical Typebar Strike Lever -->
+                            <div id="typebar" class="absolute bottom-0 left-1/2 -translate-x-1/2 w-1.5 h-16 bg-gradient-to-t from-stone-600 to-stone-300 origin-bottom transform scale-y-0 opacity-0 z-40"></div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Brand Plaque -->
-                <div class="text-center">
-                    <div class="text-teal-300 font-extrabold tracking-[0.25em] text-sm md:text-base font-serif uppercase">二部式 打字機</div>
-                    <div class="text-[9px] text-stone-500 tracking-wider font-sans">1970s Mint Portable Retro Edition</div>
-                </div>
-
-                <div class="flex items-center space-x-2">
-                    <div class="relative w-12 h-12 bg-stone-900 rounded-full border border-stone-800 shadow-inner flex items-center justify-center">
-                        <div id="spool-r" class="w-10 h-10 rounded-full bg-gradient-to-bl from-stone-800 to-black border-2 border-stone-700 flex items-center justify-center transition-transform duration-100">
-                            <div class="w-4 h-4 rounded-full bg-stone-900 border border-stone-600"></div>
+                <!-- 2. INTERNAL CHASSIS & MECHANICS -->
+                <div class="w-full flex justify-between items-center px-12 bg-stone-950/60 py-2 rounded-xl border border-stone-900/80">
+                    <div class="flex items-center space-x-2">
+                        <span class="text-xs text-stone-500 font-sans">리본 축 L</span>
+                        <div class="relative w-12 h-12 bg-stone-900 rounded-full border border-stone-800 shadow-inner flex items-center justify-center">
+                            <div id="spool-l" class="w-10 h-10 rounded-full bg-gradient-to-br from-stone-800 to-black border-2 border-stone-700 flex items-center justify-center transition-transform duration-100">
+                                <div class="w-4 h-4 rounded-full bg-stone-900 border border-stone-600"></div>
+                            </div>
                         </div>
                     </div>
-                    <span class="text-xs text-stone-500 font-sans">리본 축 R</span>
-                </div>
-            </div>
 
-            <!-- 3. KEYBOARD PANEL -->
-            <div class="w-full flex flex-col gap-2 bg-stone-950/80 p-4 rounded-xl border border-stone-900/50 shadow-inner">
-                
-                <!-- Utility row -->
-                <div class="flex justify-between items-center mb-1 px-1">
-                    <div class="flex space-x-2">
-                        <button id="btn-backspace" class="px-4 py-1.5 bg-stone-800 hover:bg-stone-700 text-stone-300 rounded border border-stone-700 text-xs font-bold font-sans flex items-center gap-1">
-                            ⬅️ 백스페이스 (Backspace)
-                        </button>
-                        <button id="btn-correction" class="px-4 py-1.5 bg-stone-200 hover:bg-stone-100 text-stone-900 rounded border border-stone-300 text-xs font-bold font-sans flex items-center gap-1 shadow-md">
-                            💧 수정액 바르기 (White-out)
-                        </button>
-                        <button id="btn-latch-batchim" class="px-4 py-1.5 bg-stone-800 hover:bg-stone-700 text-teal-400 rounded border border-stone-700 text-xs font-bold font-sans flex items-center gap-1">
-                            ⬇️ 받침 키 상태: <span id="batchim-status" class="text-red-500 font-bold">해제</span>
-                        </button>
+                    <!-- Brand Plaque -->
+                    <div class="text-center">
+                        <div class="text-teal-300 font-extrabold tracking-[0.25em] text-base font-serif uppercase">二部式 打字機</div>
+                        <div class="text-[9px] text-stone-500 tracking-wider font-sans">1970s Mint Portable Retro Edition</div>
                     </div>
-                    <div class="text-[11px] text-stone-400 bg-stone-900/80 px-2 py-1 rounded font-sans">
-                        💡 PC 키보드 자판으로 한글 입력 시 자동으로 아름답게 조합 및 배치됩니다.
+
+                    <div class="flex items-center space-x-2">
+                        <div class="relative w-12 h-12 bg-stone-900 rounded-full border border-stone-800 shadow-inner flex items-center justify-center">
+                            <div id="spool-r" class="w-10 h-10 rounded-full bg-gradient-to-bl from-stone-800 to-black border-2 border-stone-700 flex items-center justify-center transition-transform duration-100">
+                                <div class="w-4 h-4 rounded-full bg-stone-900 border border-stone-600"></div>
+                            </div>
+                        </div>
+                        <span class="text-xs text-stone-500 font-sans">리본 축 R</span>
                     </div>
                 </div>
 
-                <!-- Virtual Keys Grid (Based exactly on Webp) -->
-                <div id="virtual-keyboard" class="flex flex-col gap-2">
-                    <!-- Dynamic keys rendered from JavaScript to match photo precisely -->
+                <!-- 3. KEYBOARD PANEL -->
+                <div class="w-full flex flex-col gap-2 bg-stone-950/80 p-4 rounded-xl border border-stone-900/50 shadow-inner">
+                    
+                    <!-- Utility row -->
+                    <div class="flex flex-wrap justify-between items-center gap-2 mb-1 px-1">
+                        <div class="flex space-x-2">
+                            <button id="btn-backspace" class="px-4 py-1.5 bg-stone-800 hover:bg-stone-700 text-stone-300 rounded border border-stone-700 text-xs font-bold font-sans flex items-center gap-1">
+                                ⬅️ 백스페이스 (Backspace)
+                            </button>
+                            <button id="btn-correction" class="px-4 py-1.5 bg-stone-200 hover:bg-stone-100 text-stone-900 rounded border border-stone-300 text-xs font-bold font-sans flex items-center gap-1 shadow-md">
+                                💧 수정액 바르기 (White-out)
+                            </button>
+                            <button id="btn-latch-batchim" class="px-4 py-1.5 bg-stone-800 hover:bg-stone-700 text-teal-400 rounded border border-stone-700 text-xs font-bold font-sans flex items-center gap-1">
+                                ⬇️ 받침 키 상태: <span id="batchim-status" class="text-red-500 font-bold">해제</span>
+                            </button>
+                        </div>
+                        <div id="desktop-tip" class="text-[11px] text-stone-400 bg-stone-900/80 px-2 py-1 rounded font-sans hidden">
+                            💡 PC 키보드 자판으로 한글 입력 시 자동으로 조합되어 인쇄됩니다.
+                        </div>
+                        <div id="mobile-tip" class="text-[11px] text-teal-400 bg-stone-900/80 px-2 py-1 rounded font-sans hidden">
+                            📱 모바일 터치 모드 활성화됨 (시스템 키보드가 열리지 않습니다)
+                        </div>
+                    </div>
+
+                    <!-- Virtual Keys Grid -->
+                    <div id="virtual-keyboard" class="flex flex-col gap-2">
+                        <!-- Keys will be rendered dynamically -->
+                    </div>
                 </div>
             </div>
         </div>
@@ -325,8 +330,8 @@
                 </div>
 
                 <div>
-                    <h4 class="font-bold text-stone-100 mb-1">4. 수정액 (White-out)</h4>
-                    <p class="text-stone-300">기계식 타자기는 글자를 컴퓨터처럼 지울 수 없습니다. 오타가 났다면 백스페이스로 해당 지점으로 간 다음, **`수정액 바르기`**를 클릭하여 하얗게 지우고 그 자리에 다시 찍는 진짜 아날로그식 오타 교정을 해보세요!</p>
+                    <h4 class="font-bold text-stone-100 mb-1">4. 스마트폰 전용 무중단 터치 설계</h4>
+                    <p class="text-stone-300">모바일 환경에서는 기기 본연의 자판이 튀어나와 낭만적인 타자기 화면을 가려버리는 현상을 원천 방지하기 위해, 오직 하단 가상 키보드 터치식으로만 구동하도록 입력 차단 설계를 완성했습니다.</p>
                 </div>
             </div>
         </div>
@@ -357,11 +362,15 @@
         </div>
     </div>
 
-    <textarea id="hidden-input" class="absolute opacity-0 pointer-events-none -left-[9999px]" tabindex="-1"></textarea>
+    <!-- Hidden input is only instantiated on Non-Mobile/Desktop devices -->
+    <div id="input-container"></div>
 
     <script>
-        // --- 1. DETAILED RETRO TWO-SET TYPEWRITER LAYOUT SPECIFICATION ---
-        // Exactly mapped key structures matching the uploaded image '1782433203996.webp'
+        // --- 1. DEVICE DETECT FOR MOBILE TOUCH-ONLY MODE ---
+        // Prevents system keyboard on mobile devices while maintaining physical keyboard support on desktops
+        const isMobileDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
+
+        // --- 2. RETRO TWO-SET TYPEWRITER LAYOUT SPECIFICATION ---
         const VISUAL_KEYBOARD = [
             // Row 1
             [
@@ -380,7 +389,7 @@
             ],
             // Row 2
             [
-                { primary: "⇹", shift: "⇹", type: "normal" }, // Margin Release
+                { primary: "⇹", shift: "⇹", type: "normal" }, 
                 { primary: "ㅂ", shift: "ㅃ", type: "normal" },
                 { primary: "ㅈ", shift: "ㅉ", type: "normal" },
                 { primary: "ㄷ", shift: "ㄸ", type: "normal" },
@@ -392,11 +401,11 @@
                 { primary: "ㅐ", shift: "ㅒ", type: "normal" },
                 { primary: "ㅔ", shift: "ㅖ", type: "normal" },
                 { primary: "ㄺ", shift: "?", type: "normal" },
-                { primary: "⟵", shift: "⟵", type: "special" } // Backspace
+                { primary: "⟵", shift: "⟵", type: "special" } 
             ],
             // Row 3
             [
-                { primary: "🔒", shift: "🔒", type: "special" }, // Shift Lock
+                { primary: "🔒", shift: "🔒", type: "special" }, 
                 { primary: "ㅁ", shift: "ㅁ", type: "normal" },
                 { primary: "ㄴ", shift: "ㄴ", type: "normal" },
                 { primary: "ㅇ", shift: "ㅇ", type: "normal" },
@@ -408,11 +417,11 @@
                 { primary: "ㅣ", shift: "ㅣ", type: "normal" },
                 { primary: "ㄶ", shift: ";", type: "normal" },
                 { primary: "ㅆ", shift: "\"", type: "normal" },
-                { primary: "TAB", shift: "TAB", type: "red-tab" } // Red TAB Key
+                { primary: "TAB", shift: "TAB", type: "red-tab" } 
             ],
             // Row 4
             [
-                { primary: "받침", shift: "받침", type: "shift" }, // Left Shift
+                { primary: "받침", shift: "받침", type: "shift" }, 
                 { primary: "ㅋ", shift: "ㅋ", type: "normal" },
                 { primary: "ㅌ", shift: "ㅌ", type: "normal" },
                 { primary: "ㅊ", shift: "ㅊ", type: "normal" },
@@ -423,7 +432,7 @@
                 { primary: "ㅄ", shift: ",", type: "normal" },
                 { primary: "·", shift: "ㅡ", type: "normal" },
                 { primary: "?", shift: ".", type: "normal" },
-                { primary: "받침", shift: "받침", type: "shift" } // Right Shift
+                { primary: "받침", shift: "받침", type: "shift" } 
             ]
         ];
 
@@ -434,7 +443,7 @@
 
         function decomposeSyllable(char) {
             const code = char.charCodeAt(0) - 0xAC00;
-            if (code < 0 || code > 11171) return [char]; // Non-hangul fallback
+            if (code < 0 || code > 11171) return [char];
 
             const jongIdx = code % 28;
             const jungIdx = Math.floor((code % 588) / 28);
@@ -680,9 +689,9 @@
         let maxCarriageX = 54;
         let paperScrollY = 120;
         const lineHeight = 26;
-        const charWidth = 7.5; // Grid spacing for letters
+        const charWidth = 7.5; 
 
-        let isBatchimActive = false; // "받침" (Shift key state)
+        let isBatchimActive = false; 
 
         class Stamp {
             constructor(char, cho, jung, jong, gridX, gridY, color, isCorrection = false) {
@@ -712,7 +721,6 @@
         const ctx = canvas.getContext('2d');
         const paperContainer = document.getElementById('paper-container');
         const carriage = document.getElementById('carriage');
-        const hiddenInput = document.getElementById('hidden-input');
         const jamBar = document.getElementById('jam-bar');
         const unjamBtn = document.getElementById('btn-unjam');
         const typebar = document.getElementById('typebar');
@@ -729,6 +737,21 @@
         canvas.width = canvasWidth * scaleFactor;
         canvas.height = canvasHeight * scaleFactor;
         ctx.scale(scaleFactor, scaleFactor);
+
+        // Dynamic hidden textarea instantiation depending on platform
+        let hiddenInput = null;
+        if (!isMobileDevice) {
+            const inputContainer = document.getElementById('input-container');
+            hiddenInput = document.createElement('textarea');
+            hiddenInput.id = "hidden-input";
+            hiddenInput.className = "absolute opacity-0 pointer-events-none -left-[9999px]";
+            hiddenInput.tabIndex = -1;
+            inputContainer.appendChild(hiddenInput);
+
+            document.getElementById('desktop-tip').classList.remove('hidden');
+        } else {
+            document.getElementById('mobile-tip').classList.remove('hidden');
+        }
 
         // --- DRAW CANVAS ARTWORK ---
         function drawPaper() {
@@ -765,7 +788,6 @@
                 ctx.rotate(stamp.angle);
 
                 if (stamp.isCorrection) {
-                    // White-out simulation brush stroke
                     ctx.fillStyle = '#ffffff';
                     ctx.shadowColor = '#eae5da';
                     ctx.shadowBlur = 4;
@@ -782,23 +804,19 @@
                     const fontSize = 16 * stamp.scale;
                     ctx.font = `bold ${fontSize}px 'Courier Prime', 'Song Myung', serif`;
 
-                    // Stack mechanical stamps correctly to represent vintage 2-set
                     if (stamp.cho || stamp.jung || stamp.jong) {
-                        // Stamp initial consonant (slightly left-up)
                         if (stamp.cho) {
                             ctx.save();
                             ctx.translate(-2, -3);
                             ctx.fillText(stamp.cho, 0, 0);
                             ctx.restore();
                         }
-                        // Stamp vowel (right)
                         if (stamp.jung) {
                             ctx.save();
                             ctx.translate(2.5, 0);
                             ctx.fillText(stamp.jung, 0, 0);
                             ctx.restore();
                         }
-                        // Stamp batchim (bottom center)
                         if (stamp.jong) {
                             ctx.save();
                             ctx.translate(0, 6.5);
@@ -807,7 +825,6 @@
                             ctx.restore();
                         }
                     } else {
-                        // Raw character stamps (Numbers, English, individual elements)
                         ctx.fillText(stamp.char, 0, 0);
                     }
                 }
@@ -912,11 +929,8 @@
             let stampObj = null;
 
             if (decomposed.length > 1) {
-                // Complete Korean syllable decomposed for overlapping stamps
                 stampObj = new Stamp(char, decomposed[0], decomposed[1], decomposed[2], carriageX, currentLineY, ribbonColor, false);
             } else {
-                // Normal plain elements
-                // Handle batchim state modifiers
                 if (isBatchimActive && "ㄱㄴㄷㄹㅁㅂㅅㅇㅈㅊㅋㅌㅍㅎㄲㅆ".includes(char)) {
                     stampObj = new Stamp(char, '', '', char, carriageX, currentLineY, ribbonColor, false);
                 } else {
@@ -1018,72 +1032,74 @@
             drawPaper();
         }
 
-        // --- KEYBOARD SYSTEM INPUT HOOKS ---
-        hiddenInput.addEventListener('input', (e) => {
-            const val = e.target.value;
-            if (val.length > 0) {
-                const char = val.charAt(val.length - 1);
-                if (char === ' ') {
-                    if (isPaperLoaded && !isJammed && carriageX < maxCarriageX) {
-                        carriageX++;
-                        updateCarriage();
-                        playTypewriterClack(true);
+        // --- KEYBOARD SYSTEM INPUT HOOKS (Desktop Only) ---
+        if (!isMobileDevice && hiddenInput) {
+            hiddenInput.addEventListener('input', (e) => {
+                const val = e.target.value;
+                if (val.length > 0) {
+                    const char = val.charAt(val.length - 1);
+                    if (char === ' ') {
+                        if (isPaperLoaded && !isJammed && carriageX < maxCarriageX) {
+                            carriageX++;
+                            updateCarriage();
+                            playTypewriterClack(true);
+                        } else {
+                            playMetalStrike();
+                        }
+                    } else if (char === '\n') {
+                        performReturn();
                     } else {
-                        playMetalStrike();
+                        processStamp(char);
                     }
-                } else if (char === '\n') {
-                    performReturn();
-                } else {
-                    processStamp(char);
                 }
-            }
-            hiddenInput.value = '';
-        });
+                hiddenInput.value = '';
+            });
 
-        window.addEventListener('keydown', (e) => {
-            if (document.activeElement !== hiddenInput && !document.getElementById('modal-rip').classList.contains('hidden')) {
-                return;
-            }
-            if (e.target.tagName === 'INPUT' || (e.target.tagName === 'TEXTAREA' && e.target !== hiddenInput)) {
-                return;
-            }
+            window.addEventListener('keydown', (e) => {
+                if (document.activeElement !== hiddenInput && !document.getElementById('modal-rip').classList.contains('hidden')) {
+                    return;
+                }
+                if (e.target.tagName === 'INPUT' || (e.target.tagName === 'TEXTAREA' && e.target !== hiddenInput)) {
+                    return;
+                }
 
-            hiddenInput.focus();
+                hiddenInput.focus();
 
-            if (e.key === 'Shift') {
-                isBatchimActive = true;
-                batchimStatus.textContent = '받침용 입력 활성';
-                batchimStatus.className = 'text-emerald-400 font-bold';
-            }
+                if (e.key === 'Shift') {
+                    isBatchimActive = true;
+                    batchimStatus.textContent = '받침용 입력 활성';
+                    batchimStatus.className = 'text-emerald-400 font-bold';
+                }
 
-            // Keycap visual push animation
-            let normalKey = e.key.toLowerCase();
-            const keys = document.querySelectorAll('.vintage-key');
-            keys.forEach(k => {
-                if (k.dataset.char === normalKey || k.dataset.shift === normalKey || k.dataset.char === e.key) {
-                    k.classList.add('pressed');
-                    setTimeout(() => k.classList.remove('pressed'), 100);
+                // Keycap visual push animation
+                let normalKey = e.key.toLowerCase();
+                const keys = document.querySelectorAll('.vintage-key');
+                keys.forEach(k => {
+                    if (k.dataset.char === normalKey || k.dataset.shift === normalKey || k.dataset.char === e.key) {
+                        k.classList.add('pressed');
+                        setTimeout(() => k.classList.remove('pressed'), 100);
+                    }
+                });
+
+                if (e.key === 'Backspace') {
+                    e.preventDefault();
+                    moveBack();
+                } else if (e.key === 'Enter') {
+                    e.preventDefault();
+                    performReturn();
+                } else if (e.key === 'Escape') {
+                    forceUnjam();
                 }
             });
 
-            if (e.key === 'Backspace') {
-                e.preventDefault();
-                moveBack();
-            } else if (e.key === 'Enter') {
-                e.preventDefault();
-                performReturn();
-            } else if (e.key === 'Escape') {
-                forceUnjam();
-            }
-        });
-
-        window.addEventListener('keyup', (e) => {
-            if (e.key === 'Shift') {
-                isBatchimActive = false;
-                batchimStatus.textContent = '해제';
-                batchimStatus.className = 'text-red-500';
-            }
-        });
+            window.addEventListener('keyup', (e) => {
+                if (e.key === 'Shift') {
+                    isBatchimActive = false;
+                    batchimStatus.textContent = '해제';
+                    batchimStatus.className = 'text-red-500';
+                }
+            });
+        }
 
         // --- RENDER DYNAMIC VINTAGE KEYBOARD ---
         function renderKeyboard() {
@@ -1092,47 +1108,49 @@
 
             VISUAL_KEYBOARD.forEach(row => {
                 const rowEl = document.createElement('div');
-                rowEl.className = "flex justify-center gap-1.5 md:gap-2";
+                rowEl.className = "flex justify-center gap-1 md:gap-2";
 
                 row.forEach(key => {
                     const keyBtn = document.createElement('button');
                     
-                    // Tailor widths for special keys from photo
-                    let widthClass = "w-8 h-8 md:w-11 md:h-11";
+                    let widthClass = "w-[7.2vw] h-[7.2vw] max-w-[42px] max-h-[42px] min-w-[24px] min-h-[24px]";
                     if (key.type === 'shift') {
-                        widthClass = "w-14 h-8 md:w-18 md:h-11"; // Oval "받침" Shift
+                        widthClass = "w-[12vw] h-[7.2vw] max-w-[70px] max-h-[42px] min-w-[40px] min-h-[24px]"; 
                     } else if (key.type === 'red-tab') {
-                        widthClass = "w-12 h-8 md:w-16 md:h-11"; // Rectangular Red TAB
+                        widthClass = "w-[10vw] h-[7.2vw] max-w-[60px] max-h-[42px] min-w-[36px] min-h-[24px]"; 
                     } else if (key.primary === '⟵') {
-                        widthClass = "w-10 h-8 md:w-14 md:h-11"; // Backspace
+                        widthClass = "w-[9vw] h-[7.2vw] max-w-[54px] max-h-[42px] min-w-[30px] min-h-[24px]"; 
                     }
 
                     keyBtn.className = `vintage-key ${widthClass} flex flex-col justify-center items-center cursor-pointer text-center font-sans select-none`;
                     
-                    // Specific highlight classes
                     if (key.type === 'red-tab' || key.primary === '⟵') {
                         keyBtn.classList.add('vintage-key-red');
                     }
 
-                    // Key datasets for event matching
                     keyBtn.dataset.char = key.primary.toLowerCase();
                     keyBtn.dataset.shift = key.shift.toLowerCase();
 
-                    // Rich labels matching actual typewriter double legends
                     if (key.primary === key.shift) {
-                        keyBtn.innerHTML = `<span class="text-xs md:text-sm font-bold">${key.primary}</span>`;
+                        keyBtn.innerHTML = `<span class="text-[10px] md:text-sm font-bold">${key.primary}</span>`;
                     } else {
                         keyBtn.innerHTML = `
-                            <span class="text-[8px] md:text-[9px] text-stone-300 font-sans -mt-0.5">${key.shift}</span>
-                            <span class="text-xs md:text-sm font-bold -mt-0.5">${key.primary}</span>
+                            <span class="text-[7px] md:text-[9px] text-stone-300 font-sans -mt-0.5">${key.shift}</span>
+                            <span class="text-[10px] md:text-sm font-bold -mt-0.5">${key.primary}</span>
                         `;
                     }
 
-                    // Handlers
-                    keyBtn.addEventListener('mousedown', (e) => {
+                    // Pointerdown event works instantly on both mouse and touch without delay
+                    keyBtn.addEventListener('pointerdown', (e) => {
                         e.preventDefault();
-                        hiddenInput.focus();
+                        if (!isMobileDevice && hiddenInput) {
+                            hiddenInput.focus();
+                        }
                         
+                        // Push effect
+                        keyBtn.classList.add('pressed');
+                        setTimeout(() => keyBtn.classList.remove('pressed'), 100);
+
                         if (key.primary === '받침') {
                             toggleBatchim();
                         } else if (key.primary === '⟵') {
@@ -1160,13 +1178,19 @@
 
             // Bottom Spacebar Row
             const spaceRow = document.createElement('div');
-            spaceRow.className = "flex justify-center gap-3 mt-1";
+            spaceRow.className = "flex justify-center gap-2 mt-1";
 
             const spaceBtn = document.createElement('button');
-            spaceBtn.className = "vintage-key w-48 md:w-80 h-8 md:h-11 cursor-pointer";
-            spaceBtn.addEventListener('mousedown', (e) => {
+            spaceBtn.className = "vintage-key w-[42vw] max-w-[280px] h-[7.2vw] max-h-[42px] min-h-[24px] cursor-pointer";
+            spaceBtn.addEventListener('pointerdown', (e) => {
                 e.preventDefault();
-                hiddenInput.focus();
+                if (!isMobileDevice && hiddenInput) {
+                    hiddenInput.focus();
+                }
+
+                spaceBtn.classList.add('pressed');
+                setTimeout(() => spaceBtn.classList.remove('pressed'), 100);
+
                 if (isPaperLoaded && !isJammed && carriageX < maxCarriageX) {
                     carriageX++;
                     updateCarriage();
@@ -1176,14 +1200,18 @@
                 }
             });
 
-            // Red forward arrow repeat space key from image
             const repeatBtn = document.createElement('button');
-            repeatBtn.className = "vintage-key vintage-key-red w-14 h-8 md:w-20 md:h-11 font-bold cursor-pointer flex items-center justify-center";
-            repeatBtn.innerHTML = `<span class="text-sm">⟶</span>`;
-            repeatBtn.addEventListener('mousedown', (e) => {
+            repeatBtn.className = "vintage-key vintage-key-red w-[12vw] max-w-[80px] h-[7.2vw] max-h-[42px] min-h-[24px] font-bold cursor-pointer flex items-center justify-center";
+            repeatBtn.innerHTML = `<span class="text-xs md:text-sm">⟶</span>`;
+            repeatBtn.addEventListener('pointerdown', (e) => {
                 e.preventDefault();
-                hiddenInput.focus();
-                // Space repeat advance
+                if (!isMobileDevice && hiddenInput) {
+                    hiddenInput.focus();
+                }
+
+                repeatBtn.classList.add('pressed');
+                setTimeout(() => repeatBtn.classList.remove('pressed'), 100);
+
                 if (isPaperLoaded && !isJammed && carriageX < maxCarriageX - 2) {
                     carriageX += 2;
                     updateCarriage();
@@ -1197,6 +1225,26 @@
             spaceRow.appendChild(repeatBtn);
             container.appendChild(spaceRow);
         }
+
+        // --- INTELLIGENT MOBILE AUTO-SCALER ---
+        // Dynamically scales the desktop typewriter interface to perfectly fit smartphone screens
+        function adjustLayoutScaling() {
+            const wrapper = document.getElementById('typewriter-scale-wrapper');
+            const chassis = document.getElementById('typewriter-chassis');
+            const windowWidth = window.innerWidth;
+            const targetWidth = 896; // Original desktop width
+
+            if (windowWidth < targetWidth + 32) {
+                const scale = (windowWidth - 24) / targetWidth;
+                wrapper.style.transform = `scale(${scale})`;
+                wrapper.style.height = `${chassis.offsetHeight * scale}px`;
+            } else {
+                wrapper.style.transform = 'none';
+                wrapper.style.height = 'auto';
+            }
+        }
+
+        window.addEventListener('resize', adjustLayoutScaling);
 
         // --- ATTACH NOB AND SCROLL TRIGGERS ---
         paperContainer.addEventListener('wheel', (e) => {
@@ -1324,10 +1372,12 @@
             showToast("클립보드에 작성된 전체 본문을 복사했습니다!", "📋");
         });
 
-        // Keep input focused
+        // Click redirection for focusing hidden input (Desktop only)
         document.querySelector('main').addEventListener('click', (e) => {
-            if (e.target.tagName !== 'BUTTON' && e.target.tagName !== 'A' && !e.target.closest('#modal-rip') && !e.target.closest('#modal-manual')) {
-                hiddenInput.focus();
+            if (!isMobileDevice && hiddenInput) {
+                if (e.target.tagName !== 'BUTTON' && e.target.tagName !== 'A' && !e.target.closest('#modal-rip') && !e.target.closest('#modal-manual')) {
+                    hiddenInput.focus();
+                }
             }
         });
 
@@ -1343,7 +1393,11 @@
         window.onload = function() {
             renderKeyboard();
             drawPaper();
-            hiddenInput.focus();
+            adjustLayoutScaling();
+            
+            if (!isMobileDevice && hiddenInput) {
+                hiddenInput.focus();
+            }
         };
     </script>
 </body>
